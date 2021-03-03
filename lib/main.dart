@@ -42,8 +42,48 @@ class _HomePageState extends State<HomePage>
           CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                backgroundColor: Colors.black,
+                expandedHeight: 450,
+                flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.pin,
+                  background: Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/home.jpg'),
+                            fit: BoxFit.cover)),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.bottomRight,
+                              colors: [
+                            Colors.black,
+                            Colors.white.withOpacity(.1)
+                          ])),
+                    ),
+                  ),
+                ),
               ),
+              SliverList(
+                  delegate: SliverChildListDelegate([
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Girl Groups",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        "test_cut",
+                        style: TextStyle(color: Colors.grey, height: 1.4),
+                      ),
+                    ],
+                  ),
+                )
+              ]))
             ],
           ),
           makepage(
@@ -61,8 +101,8 @@ class _HomePageState extends State<HomePage>
           makepage(
             page: 3,
             image: 'assets/images/image3.jpg',
-            title: '왕이런',
-            description: 'Everglow',
+            title: '이나경',
+            description: 'fromis_9',
           ),
           makepage(
             page: 4,
