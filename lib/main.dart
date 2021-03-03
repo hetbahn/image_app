@@ -10,90 +10,117 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  PageController _pageController;
+  int totalPage = 4;
+
+  void _onScroll() {}
+
+  @override
+  void initState() {
+    _pageController = PageController(
+      initialPage: 0,
+    )..addListener(_onScroll);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(
+      body: PageView(
+        controller: _pageController,
         children: <Widget>[
           CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                expandedHeight: 500,
                 backgroundColor: Colors.black,
-                flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.pin,
-                  background: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/image1.jpg'),
-                            fit: BoxFit.fill)),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.bottomRight,
-                              colors: [
-                            Colors.black,
-                            Colors.black.withOpacity(.1),
-                          ])),
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              "백예빈",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 40),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  "DIA",
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 20),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ),
-              SliverList(
-                  delegate: SliverChildListDelegate([
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Was born in Chuncheon, Korea",
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
-                )
-              ]))
             ],
-          )
+          ),
+          makepage(
+            page: 1,
+            image: 'assets/images/image1.jpg',
+            title: '백예빈',
+            description: 'DIA',
+          ),
+          makepage(
+            page: 2,
+            image: 'assets/images/image2.jpg',
+            title: '최유주',
+            description: 'CherryBullet',
+          ),
+          makepage(
+            page: 3,
+            image: 'assets/images/image3.jpg',
+            title: '왕이런',
+            description: 'Everglow',
+          ),
+          makepage(
+            page: 4,
+            image: 'assets/images/image4.jpg',
+            title: '예슈화',
+            description: '(G)I-DLE',
+          ),
         ],
       ),
     );
   }
+}
+
+Widget makepage({image, title, description, page}) {
+  return Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
+      child: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
+          Colors.black,
+          Colors.black.withOpacity(.1),
+        ])),
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    title,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        height: 1.2,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    description,
+                    style: TextStyle(
+                        color: Colors.white.withOpacity(.7),
+                        height: 1.9,
+                        fontSize: 13),
+                  ),
+                ],
+              ))
+            ],
+          ),
+        ),
+      ));
 }
